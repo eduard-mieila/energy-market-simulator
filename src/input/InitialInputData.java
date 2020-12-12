@@ -1,8 +1,8 @@
-package inputDatas;
+package input;
 
 import java.util.ArrayList;
 
-public class InitialInputData {
+public final class InitialInputData {
     private ArrayList<ConsumerInputData> consumerInputData;
     private ArrayList<DistributorInputData> distributorInputData;
 
@@ -10,7 +10,7 @@ public class InitialInputData {
         return consumerInputData;
     }
 
-    public void setConsumers(ArrayList<ConsumerInputData> consumerInputData) {
+    public void setConsumers(final ArrayList<ConsumerInputData> consumerInputData) {
         this.consumerInputData = consumerInputData;
     }
 
@@ -18,15 +18,15 @@ public class InitialInputData {
         return distributorInputData;
     }
 
-    public void setDistributors(ArrayList<DistributorInputData> distributorInputData) {
+    public void setDistributors(final ArrayList<DistributorInputData> distributorInputData) {
         this.distributorInputData = distributorInputData;
     }
 
     @Override
     public String toString() {
-        return "InitialData{" +
-                "consumers=" + consumerInputData +
-                ", distributors=" + distributorInputData +
-                '}';
+        return "InitialData{"
+                + "consumers=" + consumerInputData
+                + ", distributors=" + distributorInputData
+                + '}';
     }
 }

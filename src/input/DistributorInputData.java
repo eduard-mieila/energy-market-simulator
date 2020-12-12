@@ -1,6 +1,6 @@
-package inputDatas;
+package input;
 
-public class DistributorInputData {
+public final class DistributorInputData {
     private int id;
     private int contractLength;
     private int initialBudget;
@@ -11,7 +11,7 @@ public class DistributorInputData {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -19,7 +19,7 @@ public class DistributorInputData {
         return contractLength;
     }
 
-    public void setContractLength(int contractLength) {
+    public void setContractLength(final int contractLength) {
         this.contractLength = contractLength;
     }
 
@@ -29,13 +29,13 @@ public class DistributorInputData {
 
     @Override
     public String toString() {
-        return "Distributor{" +
-                "id=" + id +
-                ", contractLength=" + contractLength +
-                ", initialBudget=" + initialBudget +
-                ", initialInfrastructureCost=" + initialInfrastructureCost +
-                ", initialProductionCost=" + initialProductionCost +
-                '}';
+        return "Distributor{"
+                + "id=" + id
+                + ", contractLength=" + contractLength
+                + ", initialBudget=" + initialBudget
+                + ", initialInfrastructureCost=" + initialInfrastructureCost
+                + ", initialProductionCost=" + initialProductionCost
+                + '}';
     }
 
     public void setInitialBudget(int initialBudget) {

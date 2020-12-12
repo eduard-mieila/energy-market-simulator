@@ -1,8 +1,8 @@
-package inputDatas;
+package input;
 
 import java.util.ArrayList;
 
-public class GameInputData {
+public final class GameInputData {
     private int numberOfTurns;
     private InitialInputData initialInputData;
     private ArrayList<MonthlyUpdateInputData> monthlyUpdateInputData;
@@ -11,7 +11,7 @@ public class GameInputData {
         return numberOfTurns;
     }
 
-    public void setNumberOfTurns(int numberOfTurns) {
+    public void setNumberOfTurns(final int numberOfTurns) {
         this.numberOfTurns = numberOfTurns;
     }
 
@@ -19,7 +19,7 @@ public class GameInputData {
         return initialInputData;
     }
 
-    public void setInitialData(InitialInputData initialInputData) {
+    public void setInitialData(final InitialInputData initialInputData) {
         this.initialInputData = initialInputData;
     }
 
@@ -27,16 +27,16 @@ public class GameInputData {
         return monthlyUpdateInputData;
     }
 
-    public void setMonthlyUpdates(ArrayList<MonthlyUpdateInputData> monthlyUpdateInputData) {
+    public void setMonthlyUpdates(final ArrayList<MonthlyUpdateInputData> monthlyUpdateInputData) {
         this.monthlyUpdateInputData = monthlyUpdateInputData;
     }
 
     @Override
     public String toString() {
-        return "GameData{" +
-                "numberOfTurns=" + numberOfTurns +
-                ", initialData=" + initialInputData +
-                ", monthlyUpdates=" + monthlyUpdateInputData +
-                '}';
+        return "GameData{"
+                + "numberOfTurns=" + numberOfTurns
+                + ", initialData=" + initialInputData
+                + ", monthlyUpdates=" + monthlyUpdateInputData
+                + '}';
     }
 }

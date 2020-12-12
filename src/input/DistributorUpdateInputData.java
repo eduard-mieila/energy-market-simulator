@@ -1,6 +1,6 @@
-package inputDatas;
+package input;
 
-public class DistributorUpdateInputData {
+public final class DistributorUpdateInputData {
     private int id;
     private int infrastructureCost;
     private int productionCost;
@@ -9,7 +9,7 @@ public class DistributorUpdateInputData {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -17,7 +17,7 @@ public class DistributorUpdateInputData {
         return infrastructureCost;
     }
 
-    public void setInfrastructureCost(int infrastructureCost) {
+    public void setInfrastructureCost(final int infrastructureCost) {
         this.infrastructureCost = infrastructureCost;
     }
 
@@ -25,16 +25,16 @@ public class DistributorUpdateInputData {
         return productionCost;
     }
 
-    public void setProductionCost(int productionCost) {
+    public void setProductionCost(final int productionCost) {
         this.productionCost = productionCost;
     }
 
     @Override
     public String toString() {
-        return "DistributorUpdate{" +
-                "id=" + id +
-                ", infrastructureCost=" + infrastructureCost +
-                ", productionCost=" + productionCost +
-                '}';
+        return "DistributorUpdate{"
+                + "id=" + id
+                + ", infrastructureCost=" + infrastructureCost
+                + ", productionCost=" + productionCost
+                + '}';
     }
 }

@@ -1,8 +1,8 @@
-package inputDatas;
+package input;
 
 import java.util.ArrayList;
 
-public class MonthlyUpdateInputData {
+public final class MonthlyUpdateInputData {
     private ArrayList<ConsumerInputData> newConsumerInputData;
     private ArrayList<DistributorUpdateInputData> costsChanges;
 
@@ -10,7 +10,7 @@ public class MonthlyUpdateInputData {
         return newConsumerInputData;
     }
 
-    public void setNewConsumers(ArrayList<ConsumerInputData> newConsumerInputData) {
+    public void setNewConsumers(final ArrayList<ConsumerInputData> newConsumerInputData) {
         this.newConsumerInputData = newConsumerInputData;
     }
 
@@ -18,15 +18,15 @@ public class MonthlyUpdateInputData {
         return costsChanges;
     }
 
-    public void setCostsChanges(ArrayList<DistributorUpdateInputData> costChanges) {
+    public void setCostsChanges(final ArrayList<DistributorUpdateInputData> costChanges) {
         this.costsChanges = costChanges;
     }
 
     @Override
     public String toString() {
-        return "MonthlyUpdate{" +
-                "newConsumers=" + newConsumerInputData +
-                ", costChanges=" + costsChanges +
-                '}';
+        return "MonthlyUpdate{"
+                + "newConsumers=" + newConsumerInputData
+                + ", costChanges=" + costsChanges
+                + '}';
     }
 }
