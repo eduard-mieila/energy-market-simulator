@@ -1,6 +1,9 @@
 package databases;
 
 import input.DistributorInputData;
+import utils.Constants;
+
+import java.util.ArrayList;
 
 public final class DistributorData implements EnergeticEntity {
     private int id;
@@ -12,21 +15,42 @@ public final class DistributorData implements EnergeticEntity {
     private int contractPrice;
     private int profit;
     private boolean isBankrupt;
+    private ArrayList<ContractData> contracts = new ArrayList<>();
 
+
+
+    public void setContractPrice(final int contractPrice) {
+        this.contractPrice = contractPrice;
+    }
+
+    public void setProfit(final int profit) {
+        this.profit = profit;
+    }
+
+    public ArrayList<ContractData> getContracts() {
+        return contracts;
+    }
+
+    public void setContracts(final ArrayList<ContractData> contracts) {
+        this.contracts = contracts;
+    }
 
     public int getProfit() {
         return profit;
     }
 
+    /**
+     * Updates profit for a Distributor
+     */
     public void updateProfit() {
-        this.profit = (int) Math.round(Math.floor(0.2 * productionCost));
+        this.profit = (int) Math.round(Math.floor(Constants.PROFIT_RATIO * productionCost));
     }
 
     public int getNumberOfConsumers() {
         return numberOfConsumers;
     }
 
-    public void setNumberOfConsumers(int numberOfConsumers) {
+    public void setNumberOfConsumers(final int numberOfConsumers) {
         this.numberOfConsumers = numberOfConsumers;
     }
 
@@ -34,7 +58,11 @@ public final class DistributorData implements EnergeticEntity {
         return contractPrice;
     }
 
+    /**
+     * Computes the price of this Distributor's contracts
+     */
     public void updateContractPrice() {
+        this.updateProfit();
         if (numberOfConsumers == 0) {
             this.contractPrice = infrastructureCost + productionCost + profit;
         } else {
@@ -119,6 +147,9 @@ public final class DistributorData implements EnergeticEntity {
                 + ", budget=" + budget
                 + ", infrastructureCost=" + infrastructureCost
                 + ", productionCost=" + productionCost
+                + ", numberOfConsumers=" + numberOfConsumers
+                + ", contractPrice=" + contractPrice
+                + ", profit=" + profit
                 + ", isBankrupt=" + isBankrupt
                 + '}';
     }

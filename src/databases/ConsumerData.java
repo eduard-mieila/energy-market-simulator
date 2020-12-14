@@ -7,6 +7,8 @@ public final class ConsumerData implements EnergeticEntity {
     private int budget;
     private int monthlyIncome;
     private boolean isBankrupt;
+    private boolean hasContract;
+    private boolean hasDebts;
 
     /**
      * Sets all fields as the fields of the parameter. Acts as a converter from ConsumerInputData
@@ -18,6 +20,32 @@ public final class ConsumerData implements EnergeticEntity {
         this.budget = newData.getInitialBudget();
         this.monthlyIncome = newData.getMonthlyIncome();
         this.isBankrupt = false;
+        this.hasContract = false;
+        this.hasDebts = false;
+    }
+
+    /**
+     * For field hasDebts
+     * @return hasDebts value
+     */
+    public boolean hasDebts() {
+        return hasDebts;
+    }
+
+    public void setHasDebts(final boolean hasDebts) {
+        this.hasDebts = hasDebts;
+    }
+
+    /**
+     * For field hasContract
+     * @return hasContract value
+     */
+    public boolean hasContract() {
+        return hasContract;
+    }
+
+    public void setHasContract(final boolean hasContract) {
+        this.hasContract = hasContract;
     }
 
     public int getId() {

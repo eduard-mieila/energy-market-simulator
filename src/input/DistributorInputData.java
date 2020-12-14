@@ -38,7 +38,7 @@ public final class DistributorInputData {
                 + '}';
     }
 
-    public void setInitialBudget(int initialBudget) {
+    public void setInitialBudget(final int initialBudget) {
         this.initialBudget = initialBudget;
     }
 
@@ -46,7 +46,7 @@ public final class DistributorInputData {
         return initialInfrastructureCost;
     }
 
-    public void setInitialInfrastructureCost(int initialInfrastructureCost) {
+    public void setInitialInfrastructureCost(final int initialInfrastructureCost) {
         this.initialInfrastructureCost = initialInfrastructureCost;
     }
 
@@ -54,7 +54,7 @@ public final class DistributorInputData {
         return initialProductionCost;
     }
 
-    public void setInitialProductionCost(int initialProductionCost) {
+    public void setInitialProductionCost(final int initialProductionCost) {
         this.initialProductionCost = initialProductionCost;
     }
 }
