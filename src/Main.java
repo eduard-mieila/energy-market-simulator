@@ -11,17 +11,20 @@ public final class Main {
 
     public static void main(final String[] args) throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
+
+        // Read input data
         GameInputData gameInput = objectMapper.readValue(new File(args[0]), GameInputData.class);
 
+        // Convert InputData to Data
         Game currentGame = new Game(gameInput);
-//        System.out.println(currentGame);
+
+        // Run Game Simulation
         currentGame.runGame();
 
+        // Convert Data to OutputData
         OutputData output = new OutputData(currentGame);
-        //objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
+        // Write OutputData to JSON file
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(args[1]), output);
-
-
-
     }
 }

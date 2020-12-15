@@ -10,6 +10,10 @@ public final class OutputData {
     private ArrayList<ConsumerOutputData> consumers;
     private ArrayList<DistributorOutputData> distributors;
 
+    /**
+     * Converts a Game to GameOutput class
+     * @param game Game to be converted
+     */
     public OutputData(final Game game) {
         this.consumers = new ArrayList<>();
         for (ConsumerData consumer : game.getConsumers()) {

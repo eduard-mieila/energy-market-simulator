@@ -9,12 +9,12 @@ import java.io.Serializable;
 @JsonPropertyOrder({"id", "isBankrupt", "budget"})
 public final class ConsumerOutputData implements Serializable {
     private int id;
-    private boolean isBakrupt;
+    private final boolean isBankrupt;
     private int budget;
 
     public ConsumerOutputData(final ConsumerData data) {
         this.id = data.getId();
-        this.isBakrupt = data.isBankrupt();
+        this.isBankrupt = data.isBankrupt();
         this.budget = data.getBudget();
     }
 
@@ -29,13 +29,10 @@ public final class ConsumerOutputData implements Serializable {
 
     @JsonPropertyOrder("1")
     @JsonProperty("isBankrupt")
-    public boolean isBakrupt() {
-        return isBakrupt;
+    public boolean isBankrupt() {
+        return isBankrupt;
     }
 
-    public void setBakrupt(final boolean bakrupt) {
-        isBakrupt = bakrupt;
-    }
 
     @JsonPropertyOrder("2")
     public int getBudget() {

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public final class DistributorOutputData {
     private int id;
     private int budget;
-    private boolean isBankrupt;
+    private final boolean isBankrupt;
     private ArrayList<ContractData> contracts;
 
     public DistributorOutputData(final DistributorData data) {
@@ -40,10 +40,6 @@ public final class DistributorOutputData {
     @JsonProperty("isBankrupt")
     public boolean isBankrupt() {
         return isBankrupt;
-    }
-
-    public void setBankrupt(final boolean bankrupt) {
-        isBankrupt = bankrupt;
     }
 
     public ArrayList<ContractData> getContracts() {

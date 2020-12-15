@@ -27,17 +27,6 @@ public final class DistributorInputData {
         return initialBudget;
     }
 
-    @Override
-    public String toString() {
-        return "Distributor{"
-                + "id=" + id
-                + ", contractLength=" + contractLength
-                + ", initialBudget=" + initialBudget
-                + ", initialInfrastructureCost=" + initialInfrastructureCost
-                + ", initialProductionCost=" + initialProductionCost
-                + '}';
-    }
-
     public void setInitialBudget(final int initialBudget) {
         this.initialBudget = initialBudget;
     }
@@ -56,5 +45,16 @@ public final class DistributorInputData {
 
     public void setInitialProductionCost(final int initialProductionCost) {
         this.initialProductionCost = initialProductionCost;
+    }
+
+    @Override
+    public String toString() {
+        return "Distributor{"
+                + "id=" + id
+                + ", contractLength=" + contractLength
+                + ", initialBudget=" + initialBudget
+                + ", initialInfrastructureCost=" + initialInfrastructureCost
+                + ", initialProductionCost=" + initialProductionCost
+                + '}';
     }
 }
