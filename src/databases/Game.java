@@ -61,12 +61,8 @@ public final class Game {
     public void runGame() throws Exception {
         EnergeticEntityFactory factory = EnergeticEntityFactory.getInstance();
         for (int i = 0; i <= this.numberOfTurns; i++) {
-            for (DistributorData distributor : this.distributors) {
-                distributor.getContracts().removeIf(e -> e.getRemainedContractMonths() <= 0);
-            }
-            this.calculateNumberOfConsumers();
 
-            // Update-uri
+            // Updates
             if (i != 0) {
                 MonthlyUpdateInputData currentUpdate = getMonthlyUpdates().get(i - 1);
                 if (currentUpdate.getNewConsumers() != null) {
@@ -87,22 +83,50 @@ public final class Game {
                 }
             }
 
-            // Se gaseste distribuitorul cu cel mai mic pret
+            // Looks for the lowest price on the market
             DistributorData lowestPriceDistributor = this.getLowestPriceDistributor();
 
-            // Se platesc salariile
+            for (DistributorData distributor : this.distributors) {
+                distributor.getContracts().removeIf(e -> e.getRemainedContractMonths() == 0);
+            }
+            this.calculateNumberOfConsumers();
+
+            // Monthly Income is paid
             this.payMonthlyIncome();
 
-            // Se semneaza contractele noi
+            // Signing contracts for consumers that do not have one already
             this.signContracts(lowestPriceDistributor);
 
-            // Se platesc contractele
+            // Contracts are paid
             this.consumersPay();
 
             // Distribuitorii isi platesc taxele
             this.distributorsPay();
 
+            // We'll erase all the contracts that have not been payed for more than 2 months
+            for (DistributorData distributor : this.distributors) {
+                distributor.getContracts().removeIf(e -> e.getRemainedContractMonths() == -1);
+            }
+
+            // Checking if all the Distributors are out of the game
+            if (allDistributorsBankrupt()) {
+                return;
+            }
+
         }
+    }
+
+    /**
+     * Checks if all Distributors in Database have isBankrupt set as true.
+     * @return true if all Distributors are bankrupt, false otherwise
+     */
+    private boolean allDistributorsBankrupt() {
+        for (DistributorData distributor : this.distributors) {
+            if (!distributor.isBankrupt()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -120,8 +144,15 @@ public final class Game {
     public void distributorsPay() {
         for (DistributorData distributor : this.distributors) {
             int totalCost = distributor.getInfrastructureCost()
-                    + distributor.getNumberOfConsumers() * distributor.getProductionCost();
-            distributor.setBudget(distributor.getBudget() - totalCost);
+                    + distributor.getContracts().size() * distributor.getProductionCost();
+            if (!distributor.isBankrupt()) {
+                if (distributor.getBudget() >= totalCost) {
+                    distributor.setBudget(distributor.getBudget() - totalCost);
+                } else {
+                    distributor.setBudget(distributor.getBudget() - totalCost);
+                    distributor.setBankrupt(true);
+                }
+            }
         }
     }
 
@@ -133,16 +164,14 @@ public final class Game {
             for (ContractData contract : distributor.getContracts()) {
                 ConsumerData consumer = this.getConsumerById(contract.getConsumerId());
                 if (consumer.hasDebts()) {
-                    if (consumer.getBudget() >= (int) Constants.DEBT_RATIO * contract.getPrice()) {
+                    if (consumer.getBudget() >= (int) Constants.STILL_CLIENT_DEBT_RATIO
+                            * contract.getPrice()) {
                         consumer.setBudget((int) (consumer.getBudget()
-                                - Constants.DEBT_RATIO * contract.getPrice()));
+                                - Constants.STILL_CLIENT_DEBT_RATIO * contract.getPrice()));
                         distributor.setBudget((int) (distributor.getBudget()
-                                + Constants.DEBT_RATIO * contract.getPrice()));
-                        contract.setRemainedContractMonths(contract.getRemainedContractMonths()
-                                - 1);
-                        if (contract.getRemainedContractMonths() == 0) {
-                            consumer.setHasContract(false);
-                        }
+                                + Constants.STILL_CLIENT_DEBT_RATIO * contract.getPrice()));
+                        contract.setRemainedContractMonths(0);
+                        consumer.setHasContract(false);
                     } else {
                         consumer.setBankrupt(true);
                         contract.setRemainedContractMonths(-1);
@@ -155,8 +184,17 @@ public final class Game {
                         consumer.setHasContract(false);
                     }
                 } else {
-                    consumer.setHasDebts(true);
-                    contract.setRemainedContractMonths(contract.getRemainedContractMonths() - 1);
+                    if (contract.getRemainedContractMonths() > 0) {
+                        consumer.setHasDebts(true);
+                        contract.setRemainedContractMonths(contract.getRemainedContractMonths()
+                                                                                            - 1);
+                        if (contract.getRemainedContractMonths() == 0) {
+                            contract.setRemainedContractMonths(Constants.CONTRACT_NOT_PAID_CODE);
+                        }
+                    } else if (contract.getRemainedContractMonths() == 0) {
+                        consumer.setHasDebts(true);
+                        contract.setRemainedContractMonths(Constants.CONTRACT_NOT_PAID_CODE);
+                    }
                 }
             }
         }
@@ -188,7 +226,6 @@ public final class Game {
                     distributor.getContracts().add(
                             new ContractData(consumer.getId(), distributor.getContractPrice(),
                                                 distributor.getContractLength()));
-                    distributor.setNumberOfConsumers(distributor.getNumberOfConsumers() + 1);
                     consumer.setHasContract(true);
                 }
             }
@@ -203,9 +240,12 @@ public final class Game {
         this.distributors.get(0).updateContractPrice();
         DistributorData lowestPriceDistributor = this.distributors.get(0);
         for (DistributorData currentDistributor : this.distributors) {
-            currentDistributor.updateContractPrice();
-            if (currentDistributor.getContractPrice() < lowestPriceDistributor.getContractPrice()) {
-                lowestPriceDistributor = currentDistributor;
+            if (!currentDistributor.isBankrupt()) {
+                currentDistributor.updateContractPrice();
+                if (currentDistributor.getContractPrice()
+                                                    < lowestPriceDistributor.getContractPrice()) {
+                    lowestPriceDistributor = currentDistributor;
+                }
             }
         }
         return lowestPriceDistributor;

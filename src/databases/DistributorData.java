@@ -17,16 +17,6 @@ public final class DistributorData implements EnergeticEntity {
     private boolean isBankrupt;
     private ArrayList<ContractData> contracts = new ArrayList<>();
 
-
-
-    public void setContractPrice(final int contractPrice) {
-        this.contractPrice = contractPrice;
-    }
-
-    public void setProfit(final int profit) {
-        this.profit = profit;
-    }
-
     public ArrayList<ContractData> getContracts() {
         return contracts;
     }
@@ -46,10 +36,6 @@ public final class DistributorData implements EnergeticEntity {
         this.profit = (int) Math.round(Math.floor(Constants.PROFIT_RATIO * productionCost));
     }
 
-    public int getNumberOfConsumers() {
-        return numberOfConsumers;
-    }
-
     public void setNumberOfConsumers(final int numberOfConsumers) {
         this.numberOfConsumers = numberOfConsumers;
     }
@@ -63,12 +49,12 @@ public final class DistributorData implements EnergeticEntity {
      */
     public void updateContractPrice() {
         this.updateProfit();
-        if (numberOfConsumers == 0) {
+        if (this.getContracts().size() == 0) {
             this.contractPrice = infrastructureCost + productionCost + profit;
         } else {
             this.updateProfit();
-            this.contractPrice = (int) Math.round(Math.floor(infrastructureCost / numberOfConsumers)
-                    + productionCost + profit);
+            this.contractPrice = (int) Math.round(Math.floor
+                        (infrastructureCost / this.contracts.size()) + productionCost + profit);
         }
     }
 
