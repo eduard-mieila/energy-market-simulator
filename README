@@ -1,7 +1,7 @@
-Programare Orientata pe Obiecte - 2CA - Proiect, Etapa 1 - Sistem energetic
-MIEILĂ Eduard-Robert, 323CA
+Simulator piață energetică
+MIEILĂ Eduard-Robert
 
-Pentru rezolvarea primei etape a proiectului, vom folosi scenariul următor:
+Pentru rezolvarea proiectului, vom folosi scenariul următor:
 1.Vom citi datele de intrare în clasele de tip *InputData, clase ce se găsesc
   în pachetul input.
 2.Vom muta datele din clasele *InputData in clasele de tip *Data din pachetul
@@ -54,7 +54,4 @@ pot fi găsite în lista de contracte a unui distribuitor.
 
 Din păcate, nu am reușit să tratez și cazurile în care, dacă un consumator este
 restant, își poate căuta un contract mai convenabil(pentru acest lucru urma să
-mă folosesc de contractele ce aveau -2 ca valoare pentru lunile ramase),
-motivul fiind timpul, pe care l-am pierdut, în mare parte, pe înțelegerea
-cerinței(personal, mi-aș fi dorit mai multe explicații cu privire la modul în
-care se desfășoară jocul, eventual un exemplu cu comentarii :) ).
+mă folosesc de contractele ce aveau -2 ca valoare pentru lunile ramase).
